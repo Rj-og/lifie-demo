@@ -9,34 +9,11 @@ import SuccessState from './SuccessState';
 /** Initial form state */
 const INITIAL_FORM = {
   fullName: '',
-  companyName: '',
   workEmail: '',
   phoneNumber: '',
-  teamSize: '',
-  useCase: '',
-  message: '',
 };
 
-/** Team size options */
-const TEAM_SIZES = [
-  { value: '', label: 'Select team size' },
-  { value: '1-10', label: '1 – 10 employees' },
-  { value: '11-50', label: '11 – 50 employees' },
-  { value: '51-200', label: '51 – 200 employees' },
-  { value: '201-500', label: '201 – 500 employees' },
-  { value: '500+', label: '500+ employees' },
-];
 
-/** Use case options */
-const USE_CASES = [
-  { value: '', label: 'Select use case' },
-  { value: 'sales-outreach', label: 'Sales Outreach' },
-  { value: 'lead-qualification', label: 'Lead Qualification' },
-  { value: 'demo-scheduling', label: 'Demo Scheduling' },
-  { value: 'customer-support', label: 'Customer Support' },
-  { value: 'appointment-setting', label: 'Appointment Setting' },
-  { value: 'other', label: 'Other' },
-];
 
 /** Email validation regex */
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -49,7 +26,6 @@ export default function DemoForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [apiError, setApiError] = useState(null);
-  const [showOptional, setShowOptional] = useState(false);
 
   /** Update a form field */
   const handleChange = useCallback((field, value) => {
@@ -79,9 +55,7 @@ export default function DemoForm() {
         if (!value?.trim()) error = 'Full name is required';
         else if (value.trim().length < 2) error = 'Name is too short';
         break;
-      case 'companyName':
-        if (!value?.trim()) error = 'Company name is required';
-        break;
+
       case 'workEmail':
         if (!value?.trim()) error = 'Work email is required';
         else if (!EMAIL_REGEX.test(value)) error = 'Enter a valid email';
@@ -110,7 +84,7 @@ export default function DemoForm() {
 
   /** Validate all required fields */
   const validateAll = () => {
-    const fields = ['fullName', 'companyName', 'workEmail', 'phoneNumber'];
+    const fields = ['fullName', 'workEmail', 'phoneNumber'];
     const newErrors = {};
 
     fields.forEach((field) => {
@@ -165,7 +139,6 @@ export default function DemoForm() {
     setTouched({});
     setIsSuccess(false);
     setApiError(null);
-    setShowOptional(false);
   };
 
   // ── Animation Variants ──────────────────────────────────
@@ -212,9 +185,9 @@ export default function DemoForm() {
           >
             {/* Form Header */}
             <div className="form-header">
-              <h2 className="form-title">Request a Demo</h2>
+              <h2 className="form-title">Schedule a Visit</h2>
               <p className="form-description">
-                See Lifie AI in action — get an instant AI-powered call.
+                Experience Akshara Ananda — book your private estate tour today.
               </p>
             </div>
 
@@ -228,7 +201,7 @@ export default function DemoForm() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                 >
-                  ⚠️ {apiError}
+                  {apiError}
                   <button
                     className="error-toast-close"
                     onClick={() => setApiError(null)}
@@ -252,26 +225,23 @@ export default function DemoForm() {
                 <label className="form-label" htmlFor="fullName">
                   Full Name <span className="required">*</span>
                 </label>
-                <div className="form-input-wrapper">
-                  <span className="form-input-icon">👤</span>
-                  <input
-                    id="fullName"
-                    type="text"
-                    className={`form-input ${touched.fullName && errors.fullName ? 'has-error' : ''}`}
-                    placeholder="John Doe"
-                    value={formData.fullName}
-                    onChange={(e) => handleChange('fullName', e.target.value)}
-                    onBlur={() => handleBlur('fullName')}
-                    disabled={isSubmitting}
-                    autoComplete="name"
-                  />
-                </div>
+                <input
+                  id="fullName"
+                  type="text"
+                  className={`form-input ${touched.fullName && errors.fullName ? 'has-error' : ''}`}
+                  placeholder="Your full name"
+                  value={formData.fullName}
+                  onChange={(e) => handleChange('fullName', e.target.value)}
+                  onBlur={() => handleBlur('fullName')}
+                  disabled={isSubmitting}
+                  autoComplete="name"
+                />
                 {touched.fullName && errors.fullName && (
-                  <p className="form-error">⚠ {errors.fullName}</p>
+                  <p className="form-error">{errors.fullName}</p>
                 )}
               </motion.div>
 
-              {/* Company Name */}
+              {/* Email Address */}
               <motion.div
                 className="form-group"
                 variants={fieldVariants}
@@ -279,55 +249,22 @@ export default function DemoForm() {
                 animate="visible"
                 custom={1}
               >
-                <label className="form-label" htmlFor="companyName">
-                  Company Name <span className="required">*</span>
-                </label>
-                <div className="form-input-wrapper">
-                  <span className="form-input-icon">🏢</span>
-                  <input
-                    id="companyName"
-                    type="text"
-                    className={`form-input ${touched.companyName && errors.companyName ? 'has-error' : ''}`}
-                    placeholder="Acme Inc."
-                    value={formData.companyName}
-                    onChange={(e) => handleChange('companyName', e.target.value)}
-                    onBlur={() => handleBlur('companyName')}
-                    disabled={isSubmitting}
-                    autoComplete="organization"
-                  />
-                </div>
-                {touched.companyName && errors.companyName && (
-                  <p className="form-error">⚠ {errors.companyName}</p>
-                )}
-              </motion.div>
-
-              {/* Work Email */}
-              <motion.div
-                className="form-group"
-                variants={fieldVariants}
-                initial="hidden"
-                animate="visible"
-                custom={2}
-              >
                 <label className="form-label" htmlFor="workEmail">
-                  Work Email <span className="required">*</span>
+                  Email Address <span className="required">*</span>
                 </label>
-                <div className="form-input-wrapper">
-                  <span className="form-input-icon">✉️</span>
-                  <input
-                    id="workEmail"
-                    type="email"
-                    className={`form-input ${touched.workEmail && errors.workEmail ? 'has-error' : ''}`}
-                    placeholder="john@company.com"
-                    value={formData.workEmail}
-                    onChange={(e) => handleChange('workEmail', e.target.value)}
-                    onBlur={() => handleBlur('workEmail')}
-                    disabled={isSubmitting}
-                    autoComplete="email"
-                  />
-                </div>
+                <input
+                  id="workEmail"
+                  type="email"
+                  className={`form-input ${touched.workEmail && errors.workEmail ? 'has-error' : ''}`}
+                  placeholder="you@company.com"
+                  value={formData.workEmail}
+                  onChange={(e) => handleChange('workEmail', e.target.value)}
+                  onBlur={() => handleBlur('workEmail')}
+                  disabled={isSubmitting}
+                  autoComplete="email"
+                />
                 {touched.workEmail && errors.workEmail && (
-                  <p className="form-error">⚠ {errors.workEmail}</p>
+                  <p className="form-error">{errors.workEmail}</p>
                 )}
               </motion.div>
 
@@ -337,7 +274,7 @@ export default function DemoForm() {
                 variants={fieldVariants}
                 initial="hidden"
                 animate="visible"
-                custom={3}
+                custom={2}
               >
                 <label className="form-label" htmlFor="phoneNumber">
                   Phone Number <span className="required">*</span>
@@ -354,94 +291,9 @@ export default function DemoForm() {
                   className={touched.phoneNumber && errors.phoneNumber ? 'has-error' : ''}
                 />
                 {touched.phoneNumber && errors.phoneNumber && (
-                  <p className="form-error">⚠ {errors.phoneNumber}</p>
+                  <p className="form-error">{errors.phoneNumber}</p>
                 )}
               </motion.div>
-
-              {/* Optional Fields Toggle */}
-              <motion.button
-                type="button"
-                className="optional-toggle"
-                onClick={() => setShowOptional(!showOptional)}
-                variants={fieldVariants}
-                initial="hidden"
-                animate="visible"
-                custom={4}
-              >
-                <span className={`optional-toggle-icon ${showOptional ? 'open' : ''}`}>
-                  ▼
-                </span>
-                {showOptional ? 'Hide additional details' : 'Add more details (optional)'}
-              </motion.button>
-
-              {/* Optional Fields */}
-              <AnimatePresence>
-                {showOptional && (
-                  <motion.div
-                    className="optional-fields"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
-                  >
-                    {/* Team Size */}
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="teamSize">
-                        Team Size
-                      </label>
-                      <select
-                        id="teamSize"
-                        className="form-select"
-                        value={formData.teamSize}
-                        onChange={(e) => handleChange('teamSize', e.target.value)}
-                        disabled={isSubmitting}
-                      >
-                        {TEAM_SIZES.map((opt) => (
-                          <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Use Case */}
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="useCase">
-                        Use Case
-                      </label>
-                      <select
-                        id="useCase"
-                        className="form-select"
-                        value={formData.useCase}
-                        onChange={(e) => handleChange('useCase', e.target.value)}
-                        disabled={isSubmitting}
-                      >
-                        {USE_CASES.map((opt) => (
-                          <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Message */}
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="message">
-                        Message
-                      </label>
-                      <textarea
-                        id="message"
-                        className="form-textarea"
-                        placeholder="Tell us about your needs..."
-                        value={formData.message}
-                        onChange={(e) => handleChange('message', e.target.value)}
-                        disabled={isSubmitting}
-                        rows={3}
-                      />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
 
               {/* Submit Button */}
               <motion.button
@@ -452,16 +304,16 @@ export default function DemoForm() {
                 variants={fieldVariants}
                 initial="hidden"
                 animate="visible"
-                custom={5}
+                custom={3}
               >
                 {isSubmitting ? (
                   <>
                     <span className="spinner" />
-                    Scheduling your call...
+                    Scheduling your visit...
                   </>
                 ) : (
                   <>
-                    Get an Instant AI Call
+                    Book Your Private Tour
                     <span style={{ fontSize: '18px' }}>→</span>
                   </>
                 )}
@@ -469,7 +321,6 @@ export default function DemoForm() {
 
               {/* Footer */}
               <div className="form-footer">
-                <span className="form-footer-icon">🔒</span>
                 Your information is secure and never shared.
               </div>
             </form>

@@ -1,35 +1,59 @@
 import './globals.css';
+import { Playfair_Display, Inter } from 'next/font/google';
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-heading',
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-body',
+  weight: ['300', '400', '500', '600', '700'],
+});
 
 export const metadata = {
-  title: 'Request a Demo | Lifie AI — Autonomous AI Voice Agents',
+  title: 'Contact Us | Akshara Ananda',
   description:
-    'Experience Lifie AI in action. Request a demo and receive an instant AI-powered phone call. Autonomous AI agents for sales outreach, lead qualification, and more.',
-  keywords: ['Lifie AI', 'AI voice agents', 'sales automation', 'demo request', 'outbound AI calls'],
-  authors: [{ name: 'Lifie AI' }],
+    'Get in touch with Akshara Ananda — luxury living amidst nature. Request a site visit or learn more about our premium residential project near Hyderabad.',
+  keywords: [
+    'Akshara Ananda',
+    'luxury villas Hyderabad',
+    'premium residential project',
+    'contact Akshara Projects',
+  ],
+  authors: [{ name: 'Akshara Projects' }],
   openGraph: {
-    title: 'Request a Demo | Lifie AI',
-    description: 'Get an instant AI-powered demo call from Lifie AI.',
-    url: 'https://lifie.ai',
-    siteName: 'Lifie AI',
+    title: 'Contact Us | Akshara Ananda',
+    description:
+      'Reach out to Akshara Ananda for site visits and project details.',
+    url: 'https://aksharaananda.com',
+    siteName: 'Akshara Ananda',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Request a Demo | Lifie AI',
-    description: 'Get an instant AI-powered demo call from Lifie AI.',
-    site: '@lifieai',
+    title: 'Contact Us | Akshara Ananda',
+    description:
+      'Reach out to Akshara Ananda for site visits and project details.',
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <head>
-        <link rel="icon" type="image/svg+xml" href="https://lifie.ai/favicon.svg" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="icon"
+          type="image/png"
+          href="https://cdn.prod.website-files.com/68c29b083f23c6749d73589a/68c29b083f23c6749d73596d_logo-full.png"
+        />
       </head>
-      <body>
+      <body className={inter.className}>
         {children}
       </body>
     </html>
