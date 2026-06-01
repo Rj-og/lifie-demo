@@ -71,9 +71,7 @@ export async function POST(request) {
       success: true,
       message: 'Demo request submitted successfully! You will receive a call shortly.',
       data: {
-        preset: result.preset,
-        campaignId: result.campaignId,
-        totalRows: result.totalRows,
+        rowId: result.rowId,
       },
     });
 
