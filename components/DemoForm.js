@@ -57,12 +57,8 @@ export default function DemoForm() {
         break;
 
       case 'workEmail':
-        if (!value?.trim()) error = 'Work email is required';
+        if (!value?.trim()) error = 'Email is required';
         else if (!EMAIL_REGEX.test(value)) error = 'Enter a valid email';
-        else {
-          const domain = value.split('@')[1]?.toLowerCase();
-          if (PERSONAL_DOMAINS.includes(domain)) error = 'Please use your work email';
-        }
         break;
       case 'phoneNumber':
         if (!value) error = 'Phone number is required';

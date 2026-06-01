@@ -35,21 +35,12 @@ export async function POST(request) {
       errors.fullName = 'Full name is required';
     }
 
-    if (!body.companyName?.trim()) {
-      errors.companyName = 'Company name is required';
-    }
+
 
     if (!body.workEmail?.trim()) {
-      errors.workEmail = 'Work email is required';
+      errors.workEmail = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.workEmail)) {
       errors.workEmail = 'Please enter a valid email address';
-    } else {
-      // Check for common personal email domains
-      const personalDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com', 'icloud.com'];
-      const emailDomain = body.workEmail.split('@')[1]?.toLowerCase();
-      if (personalDomains.includes(emailDomain)) {
-        errors.workEmail = 'Please use your work email address';
-      }
     }
 
     if (!body.phoneNumber?.trim()) {
@@ -69,7 +60,6 @@ export async function POST(request) {
     // ── Execute Lifie Reach API Flow ────────────────────────
     const result = await executeDemoRequestFlow({
       fullName: body.fullName.trim(),
-      companyName: body.companyName.trim(),
       workEmail: body.workEmail.trim().toLowerCase(),
       phoneNumber: body.phoneNumber.replace(/[\s\-\(\)]/g, ''),
       teamSize: body.teamSize || undefined,
