@@ -2,7 +2,7 @@
 
 A production-grade demo request form that triggers automated AI phone calls via the Lifie Reach API.
 
-## 🎯 Overview
+##  Overview
 
 When a prospect submits the demo form, the system:
 
@@ -11,7 +11,7 @@ When a prospect submits the demo form, the system:
 3. **Adds** the prospect as a lead to the batch
 4. **Triggers** an outbound AI phone call to the submitted phone number — automatically
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -39,7 +39,7 @@ When a prospect submits the demo form, the system:
 
 **Key design decision:** The API key is stored server-side in environment variables and API calls are proxied through a Next.js API route. This ensures the secret key is **never exposed** to the browser.
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology | Rationale |
 |-------|-----------|-----------|
@@ -49,7 +49,7 @@ When a prospect submits the demo form, the system:
 | **Phone Input** | react-phone-number-input | International phone validation with country codes |
 | **Deployment** | Vercel | Seamless Next.js hosting with env var support |
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -93,7 +93,7 @@ npm run build
 npm start
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 lifie-demo/
@@ -117,7 +117,7 @@ lifie-demo/
 └── README.md                    # This file
 ```
 
-## 🎨 Design Decisions
+##  Design Decisions
 
 - **Dark theme** with Lifie AI's brand colors (#8366f4 purple, #b447eb magenta)
 - **Glassmorphism** form card for depth and premium feel
@@ -126,7 +126,7 @@ lifie-demo/
 - **Real-time validation** on blur with clear error messages
 - **Animated transitions** between form → loading → success states
 
-## 🔐 Security
+##  Security
 
 - API key stored in environment variables, never in client code
 - Server-side validation of all form inputs
@@ -134,14 +134,14 @@ lifie-demo/
 - CORS handled by Next.js API routes
 - No sensitive data logged in production
 
-## 📱 Responsive Design
+##  Responsive Design
 
 The form is fully responsive across:
 - Desktop (side-by-side hero layout)
 - Tablet (stacked layout)
 - Mobile (full-width, optimized touch targets)
 
-## 🚢 Deployment (Vercel)
+##  Deployment (Vercel)
 
 1. Push code to GitHub
 2. Import project in [Vercel](https://vercel.com)
